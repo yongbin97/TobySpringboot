@@ -19,8 +19,11 @@ public class TobySpringbootApplication {
     public static void main(String[] args) {
         // application context 생성
         GenericApplicationContext applicationContext = new GenericApplicationContext();
-        // Bean에 Controller 등록
+
+        // Bean에 등록
         applicationContext.registerBean(HelloController.class);
+        applicationContext.registerBean(SimpleHelloService.class);
+
         // Container 초기 -> application context가 빈 Object들을 모두 생성함.
         applicationContext.refresh();
 
