@@ -10,10 +10,22 @@ import org.springframework.web.servlet.DispatcherServlet;
 public class TobySpringbootApplication {
 
     public static void main(String[] args) {
-        // application context 생성
-        GenericWebApplicationContext applicationContext = new GenericWebApplicationContext();
+        // application context 생성 및 Servlet Container 초기화
+        GenericWebApplicationContext applicationContext = new GenericWebApplicationContext() {
+            @Override
+            protected void onRefresh() {
+                super.onRefresh();
 
-        // Bean에 등록
+                ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
+                WebServer webServer = serverFactory.getWebServer(servletContext -> {
+                    servletContext.addServlet("dispatcherServlet",
+                            new DispatcherServlet(this)
+                    ).addMapping("/*");
+                });
+                webServer.start();
+            }
+        };
+        // Bean 등록
         applicationContext.registerBean(HelloController.class);
         applicationContext.registerBean(SimpleHelloService.class);
 
@@ -21,12 +33,5 @@ public class TobySpringbootApplication {
         applicationContext.refresh();
 
 
-        ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
-        WebServer webServer = serverFactory.getWebServer(servletContext -> {
-            servletContext.addServlet("dispatcherServlet",
-                    new DispatcherServlet(applicationContext)
-            ).addMapping("/*");
-        });
-        webServer.start();
     }
 }
