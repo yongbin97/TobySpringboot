@@ -24,25 +24,6 @@ public class TobySpringbootApplication {
     }
 
     public static void main(String[] args) {
-        // application context 생성 및 Servlet Container 초기화
-        AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext() {
-            @Override
-            protected void onRefresh() {
-                super.onRefresh();
-
-                ServletWebServerFactory serverFactory = this.getBean(ServletWebServerFactory.class);
-                DispatcherServlet dispatcherServlet = this.getBean(DispatcherServlet.class);
-                dispatcherServlet.setApplicationContext(this);
-
-                WebServer webServer = serverFactory.getWebServer(servletContext -> {
-                    servletContext.addServlet("dispatcherServlet", dispatcherServlet)
-                            .addMapping("/*");
-                });
-                webServer.start();
-            }
-        };
-
-        applicationContext.register(TobySpringbootApplication.class);
-        applicationContext.refresh();
+        MySpringApplication.run(TobySpringbootApplication.class, args);
     }
 }
