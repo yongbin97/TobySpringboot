@@ -3,9 +3,6 @@ package com.example.tobyspringboot;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Objects;
-
-
 @RestController
 public class HelloController {
     private final HelloService helloService;
