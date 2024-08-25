@@ -3,6 +3,7 @@ package com.example.tobyspringboot;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+
 public class HelloServiceTest {
     @Test
     void simpleHelloService() {
