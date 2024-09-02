@@ -1,5 +1,8 @@
 package com.example.config.AutoConfig;
 
+import com.example.config.MyConfigurationProperties;
+
+@MyConfigurationProperties(prefix = "server")
 public class ServerProperties {
     String contextPath;
 
