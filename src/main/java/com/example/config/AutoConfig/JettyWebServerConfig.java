@@ -12,7 +12,13 @@ import org.springframework.context.annotation.Bean;
 public class JettyWebServerConfig {
     @Bean("jettyWebServerFactory")
     @ConditionalOnMissingBean // 해당 타입의 bean이 등록된 것이 없다면 진행
-    public ServletWebServerFactory servletWebServerFactory() {
-        return new JettyServletWebServerFactory();
+    public ServletWebServerFactory servletWebServerFactory(ServerProperties properties) {
+        JettyServletWebServerFactory factory = new JettyServletWebServerFactory();
+
+        factory.setContextPath(properties.getContextPath());
+        factory.setPort(properties.getPort());
+
+        return factory;
+
     }
 }
